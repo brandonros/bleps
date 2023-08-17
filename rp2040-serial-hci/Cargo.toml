@@ -20,6 +20,8 @@ embassy-time = { version = "0.1", git = "https://github.com/embassy-rs/embassy",
 embassy-rp = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["defmt", "unstable-traits", "nightly", "unstable-pac", "time-driver", "critical-section-impl"] }
 embassy-sync = { version = "0.2", git = "https://github.com/embassy-rs/embassy", features = ["defmt"] }
 embassy-embedded-hal = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy", features = ["defmt"] }
+cyw43 = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["defmt", "firmware-logs"] }
+cyw43-pio = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["defmt", "overclock"] }
 # embedded hal
 embedded-hal = { version = "=1.0.0-rc.1" }
 # static cell
