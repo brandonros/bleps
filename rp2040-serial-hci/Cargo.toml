@@ -15,19 +15,17 @@ defmt-serial = "0.6"
 # panic
 panic-probe = { version = "0.3", features = ["print-defmt"] }
 # embassy
+rp2040-boot2 = { version = "0.3" }
 embassy-net-driver-channel = { path = "../../embassy/embassy-net-driver-channel" }
 embassy-futures = { path = "../../embassy/embassy-futures" }
 futures = { version = "0.3.17", default-features = false, features = ["async-await", "cfg-target-has-atomic", "unstable"] }
-
 embassy-executor = { path = "../../embassy/embassy-executor", features = ["nightly", "arch-cortex-m", "executor-thread", "executor-interrupt", "defmt", "integrated-timers"] }
 embassy-time = { path = "../../embassy/embassy-time", features = ["nightly", "unstable-traits", "defmt", "defmt-timestamp-uptime"] }
 embassy-rp = { path = "../../embassy/embassy-rp", features = ["defmt", "unstable-traits", "nightly", "unstable-pac", "time-driver", "critical-section-impl"] }
 embassy-sync = { path = "../../embassy/embassy-sync", features = ["defmt"] }
 embassy-embedded-hal = { path = "../../embassy/embassy-embedded-hal", features = ["defmt"] }
-
-pio-proc = "0.2"
-pio = "0.2.1"
-fixed = "1.23.1"
+cyw43 = { path = "../../embassy/cyw43", features = ["defmt", "firmware-logs"] }
+cyw43-pio = { path = "../../embassy/cyw43-pio", features = ["defmt", "overclock"] }
 # embedded hal
 embedded-hal = { version = "=1.0.0-rc.1" }
 # static cell

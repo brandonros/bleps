@@ -6,7 +6,7 @@ runner = "bash runner.sh"
 rustflags = [
   "-C", "link-arg=--nmagic",
   "-C", "link-arg=-Tlink.x",
-  "-C", "link-arg=-Tlink-rp.x",
+  #"-C", "link-arg=-Tlink-rp.x",
   "-C", "link-arg=-Tdefmt.x",
 ]
 

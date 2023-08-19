@@ -25,6 +25,14 @@ bind_interrupts!(struct Irqs {
     PIO0_IRQ_0 => embassy_rp::pio::InterruptHandler<PIO0>;
 });
 
+#[link_section = ".boot_loader"]
+#[used]
+pub static BOOT_LOADER: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
+
+#[link_section = ".firmware"]
+#[used]
+pub static FIRMWARE: [u8; 232408] = *include_bytes!("../../../embassy/cyw43-firmware/wb43439A0_7_95_49_00_combined.bin");
+
 #[embassy_executor::task]
 async fn wifi_task(
     runner: cyw43::Runner<
@@ -52,8 +60,10 @@ async fn main(spawner: Spawner) {
     // defmt serial
     defmt_serial::defmt_serial(uart0);
     // firmware
-    let fw = include_bytes!("../cyw43-firmware/43439A0.bin");
-    let clm = include_bytes!("../cyw43-firmware/43439A0_clm.bin");
+    //let firmware = include_bytes!("../../../embassy/cyw43-firmware/wb43439A0_7_95_49_00.bin");
+    //let clm = include_bytes!("../../../embassy/cyw43-firmware/wb43439A0_7_95_49_00_clm.bin");
+    let clm = include_bytes!("../../../embassy/cyw43-firmware/wb43439A0_7_95_49_00_clm.bin");
+    let bluetooth_firmware = include_bytes!("../../../embassy/cyw43-firmware/cyw43_btfw_43439.bin");
     // cyw43 init
     let pwr = Output::new(p.PIN_23, Level::Low);
     let cs = Output::new(p.PIN_25, Level::High);
@@ -68,18 +78,16 @@ async fn main(spawner: Spawner) {
         p.DMA_CH0,
     );
     let state = make_static!(cyw43::State::new());
-    let (_net_device, mut control, runner) = cyw43::new(state, pwr, spi, fw).await;
+    let (_net_device, mut control, runner) = cyw43::new(state, pwr, spi, &FIRMWARE, bluetooth_firmware).await;
     unwrap!(spawner.spawn(wifi_task(runner)));
     control.init(clm).await;
-    control
-        .set_power_management(cyw43::PowerManagementMode::PowerSave)
-        .await;
+    control.set_power_management(cyw43::PowerManagementMode::PowerSave).await;
     // LED channel
-    let led_channel = make_static!(Channel::new());
+    /*let led_channel = make_static!(Channel::new());
     let led_channel_receiver = led_channel.receiver();
     let led_channel_sender = led_channel.sender();
     unwrap!(spawner.spawn(led_task(control, led_channel_receiver)));
-    unwrap!(spawner.spawn(blink_task(led_channel_sender)));
+    unwrap!(spawner.spawn(blink_task(led_channel_sender)));*/
 }
 
 #[embassy_executor::task]
