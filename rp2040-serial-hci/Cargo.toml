@@ -15,14 +15,22 @@ defmt-serial = "0.6"
 # panic
 panic-probe = { version = "0.3", features = ["print-defmt"] }
 # embassy
-embassy-executor = { version = "0.2", git = "https://github.com/embassy-rs/embassy", features = ["nightly", "arch-cortex-m", "executor-thread", "executor-interrupt", "defmt", "integrated-timers"] }
-embassy-time = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["nightly", "unstable-traits", "defmt", "defmt-timestamp-uptime"] }
-embassy-rp = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["defmt", "unstable-traits", "nightly", "unstable-pac", "time-driver", "critical-section-impl"] }
-embassy-sync = { version = "0.2", git = "https://github.com/embassy-rs/embassy", features = ["defmt"] }
-embassy-embedded-hal = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy", features = ["defmt"] }
-cyw43 = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["defmt", "firmware-logs"] }
-cyw43-pio = { version = "0.1", git = "https://github.com/embassy-rs/embassy", features = ["defmt", "overclock"] }
+embassy-net-driver-channel = { path = "../../embassy/embassy-net-driver-channel" }
+embassy-futures = { path = "../../embassy/embassy-futures" }
+futures = { version = "0.3.17", default-features = false, features = ["async-await", "cfg-target-has-atomic", "unstable"] }
+
+embassy-executor = { path = "../../embassy/embassy-executor", features = ["nightly", "arch-cortex-m", "executor-thread", "executor-interrupt", "defmt", "integrated-timers"] }
+embassy-time = { path = "../../embassy/embassy-time", features = ["nightly", "unstable-traits", "defmt", "defmt-timestamp-uptime"] }
+embassy-rp = { path = "../../embassy/embassy-rp", features = ["defmt", "unstable-traits", "nightly", "unstable-pac", "time-driver", "critical-section-impl"] }
+embassy-sync = { path = "../../embassy/embassy-sync", features = ["defmt"] }
+embassy-embedded-hal = { path = "../../embassy/embassy-embedded-hal", features = ["defmt"] }
+
+pio-proc = "0.2"
+pio = "0.2.1"
+fixed = "1.23.1"
 # embedded hal
 embedded-hal = { version = "=1.0.0-rc.1" }
 # static cell
 static_cell = { version = "1.1", features = ["nightly"] }
+# bleps
+bleps = { path = "../bleps", features = ["macros"] }
